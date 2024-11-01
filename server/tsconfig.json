@@ -1,14 +1,17 @@
-{
+  {
     "compilerOptions": {
-      "target": "es6",
-      "module": "ES2015",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "outDir": "./dist",
-      "rootDir": "./",
+        "module": "ESNext", // or "CommonJS"
+        "target": "ES6",
+        "esModuleInterop": true,
+        "moduleResolution": "bundler",
+        "strict": true,
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "./dist",
+        "rootDir": "./",
     },
-    "include": ["index.ts"]
-  }
-  
+    "include": ["*.ts"], // Adjust paths as necessary
+    "exclude": ["node_modules"]
+}
