@@ -1,5 +1,5 @@
 // index.ts
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { mongoConnect } from './config/mongoConnect.ts'; 
 
@@ -9,19 +9,28 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
-
-
+import { authMiddleware } from './middleware/authMiddleware.ts';
 import userRoutes from './routes/user.routes.ts';
 
 // Connect to MongoDB
 mongoConnect();
 
 // checking application 
-app.get('/', (req: Request, res: Response) => {
+
+app.use('/api/users',userRoutes);
+
+// const authMiddleware=(req:Request,res:Response,next:NextFunction)=>
+//     { 
+//     if(req.header('Auth'))
+//       { next(); }
+//     else
+//       { res.status(400).json({message:"not valid request"})} 
+//     };
+
+app.get('/',authMiddleware,(req: Request, res: Response) => {
     res.status(200).json({ data: 'working' });
 });
 
-app.use('/api/users',userRoutes);
 
 
 

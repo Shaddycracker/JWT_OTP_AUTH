@@ -12,6 +12,7 @@
         "outDir": "./dist",
         "rootDir": "./",
     },
-    "include": ["*.ts"], // Adjust paths as necessary
+    "include": ["*.ts", "types/express.d.ts"], // Adjust paths as necessary
     "exclude": ["node_modules"]
+    
 }
