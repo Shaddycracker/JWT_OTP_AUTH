@@ -2,8 +2,7 @@ import { Request, Response } from 'express';
 import * as userService from '../services/userService.ts';
 import jwt,{JwtPayload} from 'jsonwebtoken';
 import {JWT_SECRET,JWT_EXPIRES_IN} from '../config/env.ts';
-
-
+import {getUserData} from '../services/GetUserFromToken.ts';
 
 export const register = async (req: Request, res: Response):Promise<void> => {
   try {
@@ -18,9 +17,9 @@ export const register = async (req: Request, res: Response):Promise<void> => {
 export const login = async (req: Request, res: Response):Promise<void> => {
   try {
     const { email, password } = req.body;
-    const token = await userService.loginUser(email, password);
+    const token= await userService.loginUser(email, password);
     if (token) {
-      res.json({ message: 'Login successful', token });
+      res.json({ message: 'Login successful', token:token.accessToken,refreshToken: token.refreshToken,user:token.user});
     } else {
       res.status(401).json({ error: 'Invalid credentials' });
     }
@@ -49,3 +48,22 @@ export const refreshToken = async (req: Request, res: Response) => {
   }
   }
 };
+
+export const userProfile= async (req:Request ,res :Response) => {
+      const {token} = req.body;
+      if(token){
+      try{
+       const userData=await getUserData(token);
+        res.status(200).json({user:userData});
+
+      } catch(err){
+        res.status(400).json({message:"Somehting wrong in verification"});
+
+      }
+    } 
+    else{
+   res.status(400).json({message:"Somehting wrong in verification"});
+    }
+      
+
+}

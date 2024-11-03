@@ -1,11 +1,12 @@
 // index.ts
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import { mongoConnect } from './config/mongoConnect.ts'; 
-
 
 dotenv.config();
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 

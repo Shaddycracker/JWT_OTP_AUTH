@@ -10,12 +10,12 @@ export const registerUser = async (email: string, username: string, password: st
     return await newUser.save();
   };
 
-  export const loginUser = async (email: string, password: string): Promise<{accessToken :string, refreshToken:string} | null> => {
+  export const loginUser = async (email: string, password: string): Promise<{accessToken :string, refreshToken:string ,user:IUser} | null> => {
     const user = await User.findOne({ email });
     if (user && await bcrypt.compare(password, user.password)) {
       const {accessToken,refreshToken}=Generatetokens(String(user._id))
       const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
-      return { accessToken, refreshToken };
+      return { accessToken, refreshToken, user };
     }
     return null;
   };
