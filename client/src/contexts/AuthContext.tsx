@@ -1,4 +1,4 @@
-import React, { createContext,useContext, useState, useEffect} from 'react';
+import React, { createContext,useContext, useState, SetStateAction} from 'react';
 import { axiosInstance } from '../lib/axiosInstance';
 // import axios from 'axios';
 
@@ -16,6 +16,7 @@ interface AuthContextTypes{
     accessToken: string|null;
     login: (email:string,password:string)=> Promise<void>,
     logout: ()=>void,
+    setUser: React.Dispatch<SetStateAction<UserType|null>>;
 
 }
 
@@ -112,7 +113,7 @@ export const AuthProvider:React.FC<ChilderenType> = ({children})=> {
     // }, [accessToken]);
 
     return (
-       <AuthContext.Provider value={{ user, accessToken, login, logout }}>
+       <AuthContext.Provider value={{ user, accessToken, login, logout, setUser}}>
       {children}
       </AuthContext.Provider>
     );

@@ -7,7 +7,7 @@ const Dashboard:React.FC= () => {
     }
   return (
     <div>
-           <h2> {user?.email} </h2>
+           <h2>Email ID: {user?.email} </h2>
 
            <button className='bg-red-900 text-white p-3 m-2' onClick={handleLogout}> Logout </button>
             Dashboard Here 
